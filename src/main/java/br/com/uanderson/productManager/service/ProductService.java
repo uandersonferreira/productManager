@@ -5,6 +5,7 @@ import br.com.uanderson.productManager.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,15 +31,18 @@ public class ProductService {
 
     public Product findByIdOrThrowNoSuchElementException(long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Product não encontrado pelo ID["+id+"]"));//exception customizada
+                .orElseThrow(() -> new NoSuchElementException("Product não encontrado pelo ID[" + id + "]"));//exception customizada
     }
 
-    public void deleteProduct(Long id){
+    public void deleteProduct(Long id) {
         productRepository.delete(findByIdOrThrowNoSuchElementException(id));
     }
 
-    public Page<Product> findPaginated(int pageNo, int pageSize){
-        PageRequest pageRequest = PageRequest.of((pageNo - 1), pageSize);
+    public Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+
+        PageRequest pageRequest = PageRequest.of((pageNo - 1), pageSize, sort);
         return productRepository.findAll(pageRequest);
     }
 

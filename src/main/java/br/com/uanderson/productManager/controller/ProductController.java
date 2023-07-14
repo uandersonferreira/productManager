@@ -23,7 +23,7 @@ public class ProductController {
 
     @GetMapping()
     public String viewHomePage(Model model){
-        return findPaginated(1, model);
+        return findPaginated(1, "name","asc", model);
     }
 
 //    @GetMapping()
@@ -73,15 +73,23 @@ public class ProductController {
     }
 
     @GetMapping(path = "/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
         int pageSize = 2;
 
-        Page<Product> page = productService.findPaginated(pageNo, pageSize);
+        Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Product> listPageContent = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("productList", listPageContent);
 
         return "index";
