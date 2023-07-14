@@ -3,6 +3,7 @@ package br.com.uanderson.productManager.controller;
 import br.com.uanderson.productManager.model.Product;
 import br.com.uanderson.productManager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,15 @@ public class ProductController {
 
     @GetMapping()
     public String viewHomePage(Model model){
-        List<Product> productList = productService.listAllProduct();
-        model.addAttribute("productList", productList);
-        return "index";
+        return findPaginated(1, model);
     }
+
+//    @GetMapping()
+//    public String viewHomePage(Model model) {
+//        List<Product> productList = productService.listAllProduct();
+//        model.addAttribute("productList", productList);
+//        return "index";
+//    }
 
    @GetMapping("/new")
     public String showNewProductForm(Model model){
@@ -59,14 +65,27 @@ public class ProductController {
         modelAndView.addObject("product", product);
         return modelAndView;
     }
-    @GetMapping("/delete/{id}")
-    public String deleteProductForm(@PathVariable(name = "id") Long id){
-        productService.deleteProduct(id);
-        return  "redirect:/";
 
+    @GetMapping("/delete/{id}")
+    public String deleteProductForm(@PathVariable(name = "id") Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/";
     }
 
+    @GetMapping(path = "/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 2;
 
+        Page<Product> page = productService.findPaginated(pageNo, pageSize);
+        List<Product> listPageContent = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("productList", listPageContent);
+
+        return "index";
+    }
 
 
 }//class
