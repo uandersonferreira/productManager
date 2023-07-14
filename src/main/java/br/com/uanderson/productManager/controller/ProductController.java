@@ -4,6 +4,7 @@ import br.com.uanderson.productManager.model.Product;
 import br.com.uanderson.productManager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,18 @@ public class ProductController {
     }
 
     @GetMapping()
-    public String viewHomePage(Model model){
-        return findPaginated(1, "name","asc", model);
+    public String viewHomePage(@Param("keyword") String keyword, Model model){
+        List<Product> productList = productService.listAllProduct(keyword);
+
+        model.addAttribute("productList", productList);
+        model.addAttribute("keyword", keyword);
+        return  "index";
     }
+
+//    @GetMapping()
+//    public String viewHomePage(Model model) {
+//        return findPaginated(1, "name", "asc", model);
+//    }
 
 //    @GetMapping()
 //    public String viewHomePage(Model model) {
@@ -77,7 +87,7 @@ public class ProductController {
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model) {
-        int pageSize = 2;
+        int pageSize = 5;
 
         Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Product> listPageContent = page.getContent();
@@ -89,7 +99,6 @@ public class ProductController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("productList", listPageContent);
 
         return "index";

@@ -89,6 +89,32 @@ GenerationType.TABLE - Com a opção TABLE é necessário criar uma tabela para
 gerenciar as chaves primárias. Por causa da sobrecarga de consultas necessárias
 para manter a tabela atualizada, essa opção é pouco recomendada.
 
+POPULANDO A TABELA:
+
+INSERT INTO product (name, brand, madein, price)
+VALUES
+    ('iPhone 12 Pro', 'Apple', 'China', 999.00),
+    ('Galaxy S21 Ultra', 'Samsung', 'Vietnã', 1199.00),
+    ('XPS 13', 'Dell', 'Estados Unidos', 1299.00),
+    ('PlayStation 5', 'Sony', 'China', 499.00),
+    ('Bose QuietComfort 35 II', 'Bose', 'Malásia', 299.00),
+    ('MacBook Pro', 'Apple', 'China', 1999.00),
+    ('Pixel 6', 'Google', 'Vietnã', 899.00),
+    ('Surface Pro 7', 'Microsoft', 'China', 1299.00),
+    ('GoPro Hero 9', 'GoPro', 'Malásia', 449.00),
+    ('AirPods Pro', 'Apple', 'China', 249.00),
+    ('Nikon D850', 'Nikon', 'Tailândia', 2999.00),
+    ('Kindle Paperwhite', 'Amazon', 'China', 129.99),
+    ('Sony A7 III', 'Sony', 'Japão', 1999.00),
+    ('Samsung QLED Q90T', 'Samsung', 'Coreia do Sul', 2499.00),
+    ('Dyson V11', 'Dyson', 'Malásia', 599.00),
+    ('Fitbit Charge 4', 'Fitbit', 'China', 149.95),
+    ('LG OLED CX', 'LG', 'Coréia do Sul', 1999.00),
+    ('Canon EOS R5', 'Canon', 'Japão', 3899.00),
+    ('Garmin Fenix 6', 'Garmin', 'Taiwan', 599.99),
+    ('Xbox Series X', 'Microsoft', 'China', 499.00),
+    ('Nintendo Switch', 'Nintendo', 'China', 299.00);
+
 
 
  */

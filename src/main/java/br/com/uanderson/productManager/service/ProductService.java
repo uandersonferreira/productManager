@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,9 +22,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> listAllProduct(){
+    public List<Product> listAllProduct(String keyword){
+        if (keyword != null){
+            return productRepository.findAll(keyword);
+        }
         return productRepository.findAll();
     }
+
 
     public void save(Product product){
         productRepository.save(product);

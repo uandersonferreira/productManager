@@ -18,11 +18,24 @@
     <div class="container">
         <h1>Product Manager</h1>
        <span><a href="new"> Create New Product</a></span>
+
+        <form th:action="@{/}">
+            Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+            &nbsp;
+            <input type="submit" value="Search" />
+            &nbsp;
+            <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+        </form>
+
         <br><br>
         <table class="table table-bordered " >
             <thead>
                 <tr class="table-primary">
-                    <th scope="col">Product ID</th>
+                    <th scope="col">
+                        <a th:href="@{'/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                            Product ID
+                        </a>
+                    </th>
                     <th scope="col">
                         <a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
                            name
@@ -87,7 +100,13 @@
 
             </div>
         </div>
-
     </div>
+
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/}]]";
+        }
+    </script>
+
 </body>
 </html>
