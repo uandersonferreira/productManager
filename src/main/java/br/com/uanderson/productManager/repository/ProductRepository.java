@@ -1,6 +1,8 @@
 package br.com.uanderson.productManager.repository;
 
 import br.com.uanderson.productManager.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,6 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                 OR p.madein LIKE %?1%
                 OR CONCAT(p.price, '') LIKE %?1%
            """)
-    List<Product> findAll(String keyword);
+    Page<Product> findAll(String keyword, Pageable pageable);
 
 }//interface

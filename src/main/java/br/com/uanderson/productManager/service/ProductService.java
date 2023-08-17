@@ -23,9 +23,9 @@ public class ProductService {
     }
 
     public List<Product> listAllProduct(String keyword){
-        if (keyword != null){
-            return productRepository.findAll(keyword);
-        }
+//        if (keyword != null){
+//            return productRepository.findAll(keyword);
+//        }
         return productRepository.findAll();
     }
 
@@ -43,11 +43,17 @@ public class ProductService {
         productRepository.delete(findByIdOrThrowNoSuchElementException(id));
     }
 
-    public Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<Product> findAllPaginated(int pageNo, int pageSize, String sortField,
+                                       String sortDirection, String keyword) {
+
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending();
 
         PageRequest pageRequest = PageRequest.of((pageNo - 1), pageSize, sort);
+
+        if (keyword != null) {
+            return productRepository.findAll(keyword, pageRequest);
+        }
         return productRepository.findAll(pageRequest);
     }
 

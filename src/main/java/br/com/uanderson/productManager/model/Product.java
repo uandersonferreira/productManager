@@ -1,9 +1,6 @@
 package br.com.uanderson.productManager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Product {
@@ -14,6 +11,8 @@ public class Product {
     private String brand;
     private String madein;
     private Double price;
+    @Column(nullable = true, length = 64)
+    private String nomeImagem;
 
     public Product(Long id, String name, String brand, String madein, Double price) {
         this.id = id;
@@ -65,6 +64,14 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
     }
 }//class
 
