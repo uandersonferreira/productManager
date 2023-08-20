@@ -68,7 +68,7 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView showEditProductForm(@PathVariable(name = "id") Long id){
+    public ModelAndView showEditProductForm(@PathVariable(name = "id") String id){
         ModelAndView modelAndView = new ModelAndView("edit_product");
         Product product = productService.findByIdOrThrowNoSuchElementException(id);
 
@@ -77,7 +77,7 @@ public class ProductController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProductForm(@PathVariable(name = "id") Long id) {
+    public String deleteProductForm(@PathVariable(name = "id") String id) {
         productService.deleteProduct(id);
         return "redirect:/";
     }

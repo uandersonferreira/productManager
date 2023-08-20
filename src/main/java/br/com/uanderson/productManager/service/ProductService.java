@@ -34,12 +34,12 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Product findByIdOrThrowNoSuchElementException(long id) {
+    public Product findByIdOrThrowNoSuchElementException(String id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Product não encontrado pelo ID[" + id + "]"));//exception customizada
     }
 
-    public void deleteProduct(Long id) {
+    public void deleteProduct(String id) {
         productRepository.delete(findByIdOrThrowNoSuchElementException(id));
     }
 

@@ -1,21 +1,18 @@
 package br.com.uanderson.productManager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "produtos")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String name;
     private String brand;
     private String madein;
     private Double price;
 
-    public Product(Long id, String name, String brand, String madein, Double price) {
+    public Product(String id, String name, String brand, String madein, Double price) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -26,12 +23,11 @@ public class Product {
     public Product() {
     }
 
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
